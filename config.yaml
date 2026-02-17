@@ -49,3 +49,11 @@ sources:
       - "https://simonwillison.net/atom/tags/ai/"
       - "https://openai.com/index/rss.xml" # Keeping original just in case
     limit: 5
+
+  engineering_blogs:
+    feeds:
+      - "https://netflixtechblog.com/feed"
+      - "https://eng.uber.com/feed/"
+      - "https://stripe.com/blog/engineering/rss"
+      - "https://medium.com/feed/engineering-jio"
+    limit: 5

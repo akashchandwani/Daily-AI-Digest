@@ -90,11 +90,17 @@ def main():
         rss_limit = rss_conf.get("limit", 5)
         futures[executor.submit(rss.fetch_rss, feeds=feeds, limit=rss_limit)] = "rss"
 
+        # Engineering Blogs
+        eng_conf = config.get("sources", {}).get("engineering_blogs", {})
+        eng_feeds = eng_conf.get("feeds", [])
+        eng_limit = eng_conf.get("limit", 5)
+        futures[executor.submit(rss.fetch_rss, feeds=eng_feeds, limit=eng_limit)] = "eng_blogs"
+
         # Collect results
         results = {
             "ai_papers": [], "sys_papers": [],
             "ai_videos": [], "sys_videos": [],
-            "news": [], "rss": []
+            "news": [], "rss": [], "eng_blogs": []
         }
 
         for future in concurrent.futures.as_completed(futures):
@@ -113,6 +119,7 @@ def main():
     sys_videos = results["sys_videos"]
     news_items = results["news"]
     rss_items = results["rss"]
+    eng_blogs = results["eng_blogs"]
 
     if args.dry_run:
         print("\n=== DRY RUN MODE: Email Content Preview ===")
@@ -136,16 +143,22 @@ def main():
         print(f"News: {len(news_items)}")
         for n in news_items:
             print(f"- {n['title']}\n  Link: {n['link']}\n  Thumbnail: {n.get('thumbnail', 'None')}\n")
+
         print(f"RSS Items: {len(rss_items)}")
         for r in rss_items:
             print(f"- [{r['source']}] {r['title']}\n  Link: {r['link']}\n  Thumbnail: {r.get('thumbnail', 'None')}\n")
+
+        print(f"Engineering Blogs: {len(eng_blogs)}")
+        for r in eng_blogs:
+            print(f"- [{r['source']}] {r['title']}\n  Link: {r['link']}\n  Thumbnail: {r.get('thumbnail', 'None')}\n")
+
         print("===========================================")
     else:
         recipient = os.getenv("RECIPIENT_EMAIL")
         if recipient:
             logger.info(f"Sending email to {recipient}...")
             # We pass the raw data, emailer handles formatting
-            emailer.send_email(ai_papers, sys_papers, ai_videos, sys_videos, news_items, rss_items, recipient)
+            emailer.send_email(ai_papers, sys_papers, ai_videos, sys_videos, news_items, rss_items, eng_blogs, recipient)
         else:
             logger.warning("RECIPIENT_EMAIL not set. Skipping email.")
 

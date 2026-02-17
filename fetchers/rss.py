@@ -24,7 +24,18 @@ def fetch_rss(feeds: List[str] = [], limit: int = 5) -> List[Dict]:
 
     for feed_url in feeds:
         try:
-            feed = feedparser.parse(feed_url)
+            import certifi
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'application/rss+xml, application/xml, application/atom+xml, text/xml;q=0.9, */*;q=0.8'
+            }
+            try:
+                resp = requests.get(feed_url, headers=headers, timeout=10, verify=certifi.where())
+            except requests.exceptions.SSLError:
+                import urllib3
+                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+                resp = requests.get(feed_url, headers=headers, timeout=10, verify=False)
+            feed = feedparser.parse(resp.content)
 
             for entry in feed.entries:
                 title = entry.title

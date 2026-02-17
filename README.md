@@ -11,14 +11,30 @@ An open-source project that delivers the latest and greatest AI news, research p
 
 ## Setup Instructions
 
-### Prerequisites
-1. **Gmail App Password**: Enable 2FA on your Google Account and generate an App Password for SMTP access.
+### 1. Google App Password (Required)
+To send emails via Gmail, you need an **App Password**:
+1. Go to your [Google Account](https://myaccount.google.com/).
+2. Select **Security**.
+3. Under "Signing in to Google," select **2-Step Verification**.
+4. At the bottom of the page, select **App passwords**.
+5. Enter a name (e.g., "Daily AI Digest") and click **Create**.
+6. **Copy the 16-character password**. You will need this for `EMAIL_PASS`.
 
-### Local Development
+### 2. GitHub Secrets (For Automation)
+To run this automatically on GitHub:
+1. Go to your repository on GitHub.
+2. Click **Settings** > **Secrets and variables** > **Actions**.
+3. Click **New repository secret**.
+4. Add the following secrets:
+   - `EMAIL_USER`: Your Gmail address (e.g., `youremail@gmail.com`).
+   - `EMAIL_PASS`: The 16-character App Password you generated above.
+   - `RECIPIENT_EMAIL`: The email address where you want to receive the digest.
+
+### 3. Local Development (Optional)
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/Agent-Sending-Reads-on-AI.git
-   cd Agent-Sending-Reads-on-AI
+   git clone https://github.com/yourusername/Daily-AI-Digest.git
+   cd Daily-AI-Digest
    ```
 
 2. **Install dependencies**:
@@ -49,14 +65,7 @@ The content sources are defined in `config.yaml`. You can edit this file to:
 - Add/Remove arXiv topics (e.g., `cs.LG`, `cs.CV`).
 - Add/Remove YouTube channels (Name: ID).
 - Add/Remove News keywords.
-
-### GitHub Actions Automation
-1. Go to your repository **Settings** -> **Secrets and variables** -> **Actions**.
-2. Add the following **Repository secrets**:
-   - `EMAIL_USER` (Your Gmail address)
-   - `EMAIL_PASS` (Your App Password)
-   - `RECIPIENT_EMAIL` (Where to send the digest)
-3. The workflow is scheduled to run daily at 8:00 AM UTC. You can also trigger it manually from the "Actions" tab.
+- Add/Remove RSS feeds.
 
 ## Architecture
 - `fetchers/`: Modules to scrape/fetch data from different sources.

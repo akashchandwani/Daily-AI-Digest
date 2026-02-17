@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from jinja2 import Template
 from datetime import datetime
 
-def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, recipient_email):
+def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, eng_blogs, recipient_email):
     """
     Sends the daily digest email.
 
@@ -16,6 +16,7 @@ def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, recipien
         sys_videos (list): List of System Design video dictionaries.
         news (list): List of news dictionaries.
         rss (list): List of RSS dictionaries.
+        eng_blogs (list): List of Engineering Blog dictionaries.
         recipient_email (str): The email address to send to.
     """
     email_user = os.getenv("EMAIL_USER")
@@ -125,6 +126,25 @@ def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, recipien
         </div>
         {% endfor %}
 
+        <h2>Engineering Blogs</h2>
+        {% for item in eng_blogs %}
+        <div class="item">
+            <div class="media-content">
+                {% if item.thumbnail %}
+                <a href="{{ item.link }}">
+                    <img src="{{ item.thumbnail }}" class="thumbnail" alt="Thumbnail" onerror="this.style.display='none'">
+                </a>
+                {% endif %}
+                <div class="text-content">
+                    <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+                    <div class="meta">
+                        Source: {{ item.source }} | {{ item.published }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
         <h2>Hacker News Top AI Stories</h2>
         {% for item in news %}
         <div class="item">
@@ -145,7 +165,7 @@ def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, recipien
         </div>
         {% endfor %}
 
-        <h2>Latest Blog Posts</h2>
+        <h2>Latest AI Blog Posts</h2>
         {% for item in rss %}
         <div class="item">
             <div class="media-content">
@@ -180,7 +200,8 @@ def send_email(ai_papers, sys_papers, ai_videos, sys_videos, news, rss, recipien
         ai_videos=ai_videos,
         sys_videos=sys_videos,
         news=news,
-        rss=rss
+        rss=rss,
+        eng_blogs=eng_blogs
     )
 
     msg = MIMEMultipart()
