@@ -5,6 +5,8 @@ on:
     # Run daily at 8:00 AM UTC
     - cron: '0 8 * * *'
   workflow_dispatch:  # Allow manual trigger
+  push:
+    branches: [ main ]
 
 jobs:
   build-and-send:
