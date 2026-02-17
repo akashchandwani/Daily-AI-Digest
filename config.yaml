@@ -1,0 +1,51 @@
+database:
+  max_items: 50
+
+sources:
+  arxiv:
+    ai_topics:
+      - "cs.AI"
+      - "cs.LG" # Machine Learning
+      - "cs.CL" # Computation and Language
+      - "cs.CV" # Computer Vision
+    ai_limit: 5
+
+    system_design_topics:
+      - "cs.DC" # Distributed, Parallel, and Cluster Computing
+      - "cs.SE" # Software Engineering
+      - "cs.NI" # Networking and Internet Architecture
+      - "cs.DB" # Databases
+    system_design_limit: 3
+
+  youtube:
+    ai_channels:
+      "Two Minute Papers": "UCbfYPyITQ-7l4upoX8nvctg"
+      "AI Explained": "UCNJ1Ymd5yFuUPtn21xxR7kw"
+      "Andrej Karpathy": "UC840aW0g1j90nD_5Oqj8N-g"
+      "Yannic Kilcher": "UCzh4y5gLQ-qdAtrkBM2GtpA"
+      "Sentdex": "UCfzlCWGWYyIQ0aLC5w48gBQ"
+    ai_limit: 3
+
+    system_design_channels:
+      "ByteByteGo": "UCZgt6AzoyjslHTC9dz0UoTw"
+      "Gaurav Sen": "UCRPMAqdtSgd0Ipeef7iFsKw"
+      "Hussein Nasser": "UC_ML5xP23TOWKUcc-oAE_Eg"
+    system_design_limit: 3
+
+  news:
+    keywords:
+      - "AI"
+      - "LLM"
+      - "GPT"
+      - "Transformer"
+      - "Generative AI"
+      - "OpenAI"
+      - "Anthropic"
+    limit: 5
+
+  rss:
+    feeds:
+      - "https://techcrunch.com/category/artificial-intelligence/feed/"
+      - "https://simonwillison.net/atom/tags/ai/"
+      - "https://openai.com/index/rss.xml" # Keeping original just in case
+    limit: 5
