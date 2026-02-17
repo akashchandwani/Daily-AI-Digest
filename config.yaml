@@ -24,12 +24,17 @@ sources:
       "Andrej Karpathy": "UC840aW0g1j90nD_5Oqj8N-g"
       "Yannic Kilcher": "UCzh4y5gLQ-qdAtrkBM2GtpA"
       "Sentdex": "UCfzlCWGWYyIQ0aLC5w48gBQ"
+      "Google DeepMind": "UCP7jMXSY2xbc3KCAE0MHQ"
+      "Microsoft Research": "UCCb9_Kn8F_Opb3UCGm-lILQ"
+      "Stanford Online": "UCBa5G_ESCn8Yd4vw5U-gIcg"
     ai_limit: 3
 
     system_design_channels:
       "ByteByteGo": "UCZgt6AzoyjslHTC9dz0UoTw"
       "Gaurav Sen": "UCRPMAqdtSgd0Ipeef7iFsKw"
       "Hussein Nasser": "UC_ML5xP23TOWKUcc-oAE_Eg"
+      "InfoQ": "UCkQX1tChV7Z7l1LFF4L9j_g"
+      "GOTO Conferences": "UCs_tLP3AiwYKwdUHpltJPuA"
     system_design_limit: 3
 
   news:
@@ -53,7 +58,10 @@ sources:
   engineering_blogs:
     feeds:
       - "https://netflixtechblog.com/feed"
-      - "https://eng.uber.com/feed/"
-      - "https://stripe.com/blog/engineering/rss"
-      - "https://medium.com/feed/engineering-jio"
+      - "https://www.uber.com/blog/engineering/rss/"
+      - "https://stripe.com/blog/feed.rss"
+      - "https://engineering.fb.com/feed"
+      - "https://developers.googleblog.com/feeds/posts/default"
+      - "https://medium.com/feed/airbnb-engineering"
+      - "https://medium.com/feed/pinterest-engineering"
     limit: 5

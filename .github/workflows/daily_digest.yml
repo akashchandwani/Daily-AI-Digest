@@ -2,8 +2,8 @@ name: Daily AI Digest
 
 on:
   schedule:
-    # Run daily at 8:00 AM UTC
-    - cron: '0 8 * * *'
+    # Run daily at 2:00 AM UTC = 7:30 AM IST
+    - cron: '0 2 * * *'
   workflow_dispatch:  # Allow manual trigger
   push:
     branches: [ main ]

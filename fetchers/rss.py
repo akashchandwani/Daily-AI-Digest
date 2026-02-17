@@ -9,13 +9,14 @@ from typing import List, Dict, Optional
 
 logger = logging.getLogger(__name__)
 
-def fetch_rss(feeds: List[str] = [], limit: int = 5) -> List[Dict]:
+def fetch_rss(feeds: List[str] = [], limit: int = 5, one_per_source: bool = False) -> List[Dict]:
     """
     Fetches latest items from a list of RSS feeds.
 
     Args:
         feeds (List[str]): List of RSS feed URLs.
         limit (int): The number of items to return (default: 5).
+        one_per_source (bool): If True, returns the latest item from each source.
 
     Returns:
         List[Dict]: A list of dictionaries containing feed items.
@@ -27,7 +28,11 @@ def fetch_rss(feeds: List[str] = [], limit: int = 5) -> List[Dict]:
             import certifi
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'application/rss+xml, application/xml, application/atom+xml, text/xml;q=0.9, */*;q=0.8'
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+                'Cache-Control': 'max-age=0'
             }
             try:
                 resp = requests.get(feed_url, headers=headers, timeout=10, verify=certifi.where())
@@ -80,12 +85,18 @@ def fetch_rss(feeds: List[str] = [], limit: int = 5) -> List[Dict]:
                 }
                 all_items.append(item)
 
+                if one_per_source:
+                    break # Take only the first (latest) item
+
         except Exception as e:
             logger.error(f"Error fetching feed {feed_url}: {e}")
             continue
 
     # Sort by date descending
     all_items.sort(key=lambda x: x['published_dt'], reverse=True)
+
+    if one_per_source:
+        return all_items # Return all single items from each source
 
     return all_items[:limit]
 

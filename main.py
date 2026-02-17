@@ -88,13 +88,13 @@ def main():
         rss_conf = config.get("sources", {}).get("rss", {})
         feeds = rss_conf.get("feeds", [])
         rss_limit = rss_conf.get("limit", 5)
-        futures[executor.submit(rss.fetch_rss, feeds=feeds, limit=rss_limit)] = "rss"
+        futures[executor.submit(rss.fetch_rss, feeds=feeds, limit=rss_limit, one_per_source=True)] = "rss"
 
         # Engineering Blogs
         eng_conf = config.get("sources", {}).get("engineering_blogs", {})
         eng_feeds = eng_conf.get("feeds", [])
         eng_limit = eng_conf.get("limit", 5)
-        futures[executor.submit(rss.fetch_rss, feeds=eng_feeds, limit=eng_limit)] = "eng_blogs"
+        futures[executor.submit(rss.fetch_rss, feeds=eng_feeds, limit=eng_limit, one_per_source=True)] = "eng_blogs"
 
         # Collect results
         results = {
